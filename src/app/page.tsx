@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client"
 import { useState, useEffect } from "react"
 import axios from "axios"
@@ -128,18 +128,31 @@ export default function PhishingDetector() {
     }
   }
 
-  const getRiskBadgeVariant = (riskLevel: string) => {
+  // Fixed function to return only valid Badge variants
+  const getRiskBadgeVariant = (riskLevel: string): "default" | "secondary" | "destructive" | "outline" => {
     switch (riskLevel) {
       case "Critical":
         return "destructive"
       case "High":
         return "destructive"
       case "Medium":
-        return "warning"
+        return "secondary" // Changed from "warning"
       case "Low":
-        return "success"
+        return "outline" // Changed from "success"
       default:
         return "secondary"
+    }
+  }
+
+  // Get additional class names for badges to maintain color coding
+  const getRiskBadgeClassName = (riskLevel: string): string => {
+    switch (riskLevel) {
+      case "Medium":
+        return "bg-yellow-500 hover:bg-yellow-600 text-black"
+      case "Low":
+        return "bg-green-500 hover:bg-green-600 text-white border-green-600"
+      default:
+        return ""
     }
   }
 
@@ -147,6 +160,13 @@ export default function PhishingDetector() {
     if (score > 0.7) return "text-red-500"
     if (score > 0.4) return "text-yellow-500"
     return "text-green-500"
+  }
+
+  // Function to get the progress bar color based on confidence score
+  const getProgressIndicatorClass = (score: number) => {
+    if (score > 0.7) return "bg-red-500"
+    if (score > 0.4) return "bg-yellow-500"
+    return "bg-green-500"
   }
 
   return (
@@ -234,7 +254,10 @@ export default function PhishingDetector() {
                       <CardDescription>Analysis completed using deep learning method</CardDescription>
                     </div>
                   </div>
-                  <Badge variant={getRiskBadgeVariant(result.risk_level)} className="text-sm px-3 py-1">
+                  <Badge 
+                    variant={getRiskBadgeVariant(result.risk_level)} 
+                    className={`text-sm px-3 py-1 ${getRiskBadgeClassName(result.risk_level)}`}
+                  >
                     {result.risk_level} Risk
                   </Badge>
                 </div>
@@ -256,21 +279,17 @@ export default function PhishingDetector() {
                 <div className="mb-4">
                   <div className="flex justify-between mb-1">
                     <span className="text-sm font-medium">Confidence Score</span>
-                    <span className={`text-sm font-bold ${getConfidenceColor(result.confidence_score)}`}>
+                    <span className={`text-sm font-bold text-amber-50`}>
                       {(result.confidence_score * 100).toFixed(0)}%
                     </span>
                   </div>
-                  <Progress
-                    value={result.confidence_score * 100}
-                    className="h-2"
-                    indicatorClassName={
-                      result.confidence_score > 0.7
-                        ? "bg-red-500"
-                        : result.confidence_score > 0.4
-                          ? "bg-yellow-500"
-                          : "bg-green-500"
-                    }
-                  />
+                  {/* FIXED PART: Remove the indicatorClassName prop and use custom CSS */}
+                  <div className="relative h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div 
+                      className={`absolute top-0 left-0 h-full bg-amber-50`}
+                      style={{ width: `${result.confidence_score * 100}%` }}
+                    />
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -388,4 +407,3 @@ export default function PhishingDetector() {
     </div>
   )
 }
-
