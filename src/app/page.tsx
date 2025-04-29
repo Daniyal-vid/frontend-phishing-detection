@@ -113,20 +113,20 @@ export default function PhishingDetector() {
     setResult(sampleData)
   }
 
-  const getRiskColor = (riskLevel: string) => {
-    switch (riskLevel) {
-      case "Critical":
-        return "bg-red-600 text-white"
-      case "High":
-        return "bg-orange-500 text-white"
-      case "Medium":
-        return "bg-yellow-500 text-black"
-      case "Low":
-        return "bg-green-500 text-white"
-      default:
-        return "bg-gray-500 text-white"
-    }
-  }
+  // const getRiskColor = (riskLevel: string) => {
+  //   switch (riskLevel) {
+  //     case "Critical":
+  //       return "bg-red-600 text-white"
+  //     case "High":
+  //       return "bg-orange-500 text-white"
+  //     case "Medium":
+  //       return "bg-yellow-500 text-black"
+  //     case "Low":
+  //       return "bg-green-500 text-white"
+  //     default:
+  //       return "bg-gray-500 text-white"
+  //   }
+  // }
 
   // Fixed function to return only valid Badge variants
   const getRiskBadgeVariant = (riskLevel: string): "default" | "secondary" | "destructive" | "outline" => {
@@ -156,18 +156,18 @@ export default function PhishingDetector() {
     }
   }
 
-  const getConfidenceColor = (score: number) => {
-    if (score > 0.7) return "text-red-500"
-    if (score > 0.4) return "text-yellow-500"
-    return "text-green-500"
-  }
+  // const getConfidenceColor = (score: number) => {
+  //   if (score > 0.7) return "text-red-500"
+  //   if (score > 0.4) return "text-yellow-500"
+  //   return "text-green-500"
+  // }
 
-  // Function to get the progress bar color based on confidence score
-  const getProgressIndicatorClass = (score: number) => {
-    if (score > 0.7) return "bg-red-500"
-    if (score > 0.4) return "bg-yellow-500"
-    return "bg-green-500"
-  }
+  // // Function to get the progress bar color based on confidence score
+  // const getProgressIndicatorClass = (score: number) => {
+  //   if (score > 0.7) return "bg-red-500"
+  //   if (score > 0.4) return "bg-yellow-500"
+  //   return "bg-green-500"
+  // }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col items-center p-4 md:p-8 transition-colors duration-300">
