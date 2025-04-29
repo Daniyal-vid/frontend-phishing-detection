@@ -1,7 +1,14 @@
-import type { NextConfig } from "next";
+// nextconfig.ts
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  reactStrictMode: true,
+  // Output directory
+  distDir: '.next',
+  // If you need experimental features
+  experimental: {
+    // Any experimental features you're using
+  }
+}
 
-export default nextConfig;
+export default nextConfig
